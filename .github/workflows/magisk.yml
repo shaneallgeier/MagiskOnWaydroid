@@ -369,7 +369,7 @@ jobs:
           sudo patchelf --replace-needed libdl.so "${HOME}/libdl.so" ./magiskpolicy || true
           sudo patchelf --set-interpreter "${HOME}/linker64" ./magiskpolicy || true
           # new since v24.3
-          sudo chmod +x ./magiskpolicy
+          sudo chmod +rwx ./magiskpolicy
           echo '/dev/magisk(/.*)?    u:object_r:magisk_file:s0' | sudo tee -a system/vendor/etc/selinux/vendor_file_contexts
           echo '/data/adb/magisk(/.*)?   u:object_r:magisk_file:s0' | sudo tee -a system/vendor/etc/selinux/vendor_file_contexts
           echo '/system/bin/strace u:object_r:zygote_socket:s0' | sudo tee -a system/vendor/etc/selinux/vendor_file_contexts
