@@ -15,13 +15,6 @@ on:
         type: choice
         options:
         - x64
-      and_ver:
-        description: "Android Version"
-        required: true
-        default: "11"
-        type: choice
-        options:
-        - 11
       magisk_apk:
         description: "Magisk version"
         required: true
@@ -307,10 +300,12 @@ jobs:
           if not os.path.isfile(out_file):
               urllib.request.urlretrieve(link, out_file)
           print("done", flush=True)
+      - name: Download LineageOS
+        run: |
+          wget -q https://sourceforge.net/projects/blissos-dev/files/waydroid/lineage/lineage-18.1/Lineage-OS-18.1-waydroid_x86_64-202111291420-foss-sd-hd-ex_ax86-vaapi_gles-aep.zip/download -O los.zip
       - name: Replace system and vendor
         run: |
           rm -rf ${{ matrix.arch }}/{system,vendor}.img
-          wget -q https://sourceforge.net/projects/blissos-dev/files/waydroid/lineage/lineage-18.1/Lineage-OS-18.1-waydroid_x86_64-202111291420-foss-sd-hd-ex_ax86-vaapi_gles-aep.zip/download -O los.zip
           7z x los.zip -o${{ matrix.arch }}/
       - name: Extract GApps and expand images
         if: ${{ matrix.gapps_variant != 'none' && matrix.gapps_variant != '' }}
