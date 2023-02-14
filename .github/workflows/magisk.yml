@@ -300,7 +300,14 @@ jobs:
           if not os.path.isfile(out_file):
               urllib.request.urlretrieve(link, out_file)
           print("done", flush=True)
+      - name: Cache LineageOS
+        id: cache-lineageos
+        uses: actions/cache@v3
+        with:
+          path: los.zip
+          key: lineage-os
       - name: Download LineageOS
+        if: steps.cache-lineageos.outputs.cache-hit != 'true'
         run: |
           wget -q https://sourceforge.net/projects/blissos-dev/files/waydroid/lineage/lineage-18.1/Lineage-OS-18.1-waydroid_x86_64-202111291420-foss-sd-hd-ex_ax86-vaapi_gles-aep.zip/download -O los.zip
       - name: Replace system and vendor
